@@ -1,11 +1,7 @@
-package org.example.cotroller;
+package org.example.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.example.cotroller.dto.MetadataRequestDTO;
-import org.example.cotroller.dto.MetadataResponseDTO;
-import org.example.cotroller.dto.ProgramRequestDTO;
-import org.example.model.Metadata;
+import org.example.controller.dto.MetadataRequestDTO;
+import org.example.controller.dto.MetadataResponseDTO;
 import org.example.service.MetadataService;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +36,7 @@ public class MetadataController {
                 metadataService.changeProductionYear(metadataId));
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public MetadataResponseDTO createMetadata(@RequestParam(required = true) Long programId ,@RequestBody MetadataRequestDTO dto) {
         return MetadataResponseDTO.mapToDto(
                 metadataService.createMetadata(programId,dto));

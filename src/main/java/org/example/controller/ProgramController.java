@@ -1,8 +1,8 @@
-package org.example.cotroller;
+package org.example.controller;
 
 
-import org.example.cotroller.dto.ProgramRequestDTO;
-import org.example.cotroller.dto.ProgramResponseDTO;
+import org.example.controller.dto.ProgramRequestDTO;
+import org.example.controller.dto.ProgramResponseDTO;
 import org.example.model.Program;
 import org.example.service.ProgramService;
 import org.springframework.http.HttpStatus;
@@ -48,7 +48,7 @@ public class ProgramController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ProgramResponseDTO createProgram(@Validated @RequestBody ProgramRequestDTO dto) {
         Program program = service.createProgram(dto);
 
@@ -57,15 +57,17 @@ public class ProgramController {
 
     @PutMapping("/activate/{programId}")
     public ProgramResponseDTO activateProgram(@PathVariable Long programId) {
+        Program program = service.getProgramById(programId);
         return ProgramResponseDTO.mapToDto(
-                service.enableProgram(programId,true)
+                service.enableProgram(program,true)
         );
     }
 
     @PutMapping("/deactivate/{programId}")
     public ProgramResponseDTO deactivateProgram(@PathVariable Long programId) {
+        Program program = service.getProgramById(programId);
         return ProgramResponseDTO.mapToDto(
-                service.enableProgram(programId,false)
+                service.enableProgram(program,false)
         );
     }
 

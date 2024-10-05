@@ -1,4 +1,4 @@
-package org.example.cotroller.dto;
+package org.example.controller;
 
 
 import org.example.model.Movie;

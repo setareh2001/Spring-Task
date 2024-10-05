@@ -1,8 +1,6 @@
 package org.example.model;
 
 import lombok.*;
-import org.example.cotroller.dto.ProgramResponseDTO;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.Instant;

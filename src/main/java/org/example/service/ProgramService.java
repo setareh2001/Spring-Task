@@ -1,13 +1,12 @@
 package org.example.service;
 
-import org.example.cotroller.dto.ProgramRequestDTO;
+import org.example.controller.dto.ProgramRequestDTO;
 import org.example.model.Program;
 import org.example.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProgramService {
@@ -43,8 +42,7 @@ public class ProgramService {
         return programRepository.save(mappedProgram);
     }
 
-    public Program enableProgram(Long programId, boolean flag) {
-        Program program = getProgramById(programId);
+    public Program enableProgram(Program program, boolean flag) {
         program.setEnabled(flag);
 
         return programRepository.save(program);

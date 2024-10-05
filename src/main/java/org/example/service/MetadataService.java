@@ -1,11 +1,10 @@
 package org.example.service;
 
-import org.example.cotroller.dto.MetadataRequestDTO;
+import org.example.controller.dto.MetadataRequestDTO;
 import org.example.model.Metadata;
 import org.example.model.Program;
 import org.example.repository.MetadataRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Instant;
 import java.util.List;
@@ -37,6 +36,8 @@ public class MetadataService {
 
         data.setProgram(program);
         data.setCreatedAt(Instant.now());
+        programService.enableProgram(program,true);
+
 
         return metadataRepository.save(data);
     }
