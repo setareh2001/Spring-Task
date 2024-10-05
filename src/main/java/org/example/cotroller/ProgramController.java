@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/program")
 public class ProgramController {
+
     private final ProgramService service;
 
     ProgramController(ProgramService service) {
@@ -40,6 +41,13 @@ public class ProgramController {
         return ProgramResponseDTO.mapToDto(service.getProgramById(programId));
     }
 
+    @GetMapping("/enabled")
+    public List<ProgramResponseDTO> getEnabledPrograms() {
+        return service.getEnabledPrograms().stream()
+                .map(ProgramResponseDTO::mapToDto)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/create")
     public ProgramResponseDTO createProgram(@Validated @RequestBody ProgramRequestDTO dto) {
         Program program = service.createProgram(dto);
@@ -47,19 +55,25 @@ public class ProgramController {
         return ProgramResponseDTO.mapToDto(program);
     }
 
-    @PutMapping("/enable/{programId}")
-    public ProgramResponseDTO enableProgram(@PathVariable Long programId) {
+    @PutMapping("/activate/{programId}")
+    public ProgramResponseDTO activateProgram(@PathVariable Long programId) {
         return ProgramResponseDTO.mapToDto(
                 service.enableProgram(programId,true)
         );
     }
 
-    @PutMapping("/disable/{programId}")
-    public ProgramResponseDTO disableProgram(@PathVariable Long programId) {
+    @PutMapping("/deactivate/{programId}")
+    public ProgramResponseDTO deactivateProgram(@PathVariable Long programId) {
         return ProgramResponseDTO.mapToDto(
                 service.enableProgram(programId,false)
         );
     }
+
+    @PutMapping("/description/{programId}")
+    public ProgramResponseDTO changeDescription(@PathVariable Long programId) {
+        return ProgramResponseDTO.mapToDto(
+                   service.changeDescription(programId));
+    };
 
     @PostMapping("/imdb")
     public ResponseEntity<Program> createProgram(@RequestHeader String requestID, @RequestBody Program program) {
@@ -68,5 +82,11 @@ public class ProgramController {
         program.setId(new Random().nextLong());
 
         return ResponseEntity.status(HttpStatus.OK).header("requestID", requestID).body(program);
+    }
+
+    @DeleteMapping("/deleteProgram/{programId}")
+    public ProgramResponseDTO deleteProgram(@PathVariable Long programId) {
+        return ProgramResponseDTO.mapToDto(
+                service.deleteProgram(programId));
     }
 }

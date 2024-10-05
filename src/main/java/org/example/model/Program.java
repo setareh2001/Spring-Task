@@ -26,6 +26,7 @@ public class Program {
     private String description;
     private Boolean enabled;
     private String imdbCode;
+    private boolean isDeleted;
 
     @Enumerated(value = EnumType.STRING)
     private ProgramType type;

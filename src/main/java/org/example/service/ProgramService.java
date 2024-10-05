@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgramService {
@@ -28,6 +29,10 @@ public class ProgramService {
         });
     }
 
+    public List<Program> getEnabledPrograms() {
+        return programRepository.findProgramsByEnabled();
+    }
+
     public Program createProgram(ProgramRequestDTO dto) {
         if (programRepository.existsByImdbCode(dto.getImdbCode())) throw new RuntimeException("Duplicate Imdb Code");
 
@@ -41,6 +46,20 @@ public class ProgramService {
     public Program enableProgram(Long programId, boolean flag) {
         Program program = getProgramById(programId);
         program.setEnabled(flag);
+
+        return programRepository.save(program);
+    }
+
+    public Program changeDescription(Long programId) {
+        Program program = getProgramById(programId);
+        program.setDescription("This movie is bullshit,Dont watch it.");
+
+        return programRepository.save(program);
+    }
+
+    public Program deleteProgram(Long programId) {
+        Program program = getProgramById(programId);
+        program.setDeleted(true);
 
         return programRepository.save(program);
     }

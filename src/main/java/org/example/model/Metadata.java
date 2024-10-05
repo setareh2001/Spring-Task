@@ -24,6 +24,7 @@ public class Metadata {
     private String ageRating;
     private String movieLength;
     private Double imdbRating;
+    private boolean isDeleted;
 
     @OneToOne
     @JoinColumn(name = "fk_program")
